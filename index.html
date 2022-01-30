@@ -1,188 +1,172 @@
-<!doctype html>
-<html>
-  <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-  .slidecontainer {
-  width: 100%;
-  }
 
-  .slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  }
-
-  .slider:hover {
-  opacity: 1;
-  }
-
-  .slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-  }
-
-  .slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-  }
-  </style>
-  </head>
-
-   <body style="font-family:courier;">
-     <h1>Mandelbulb Renderer</h1>
-     <p>A shader in GLSL using ray-marching to render a mandelbulb fractal. A couple of parameters were added to change the fractal calculations, whose values can be changed with the sliders. </p>
-     <p><b>Zoom slider</b></p>
-
-     <div class="slidecontainer">
-     <input type="range" min="1" max="100" value="10" class="slider" id="sliderStart">
-     </div>
-     <p><b>parameter 1</b></p>
-     <div class="slidecontainer">
-     <input type="range" min="-100" max="100" value="0" class="slider" id="sliderParam1">
-     </div>
-     <p><b>parameter 2</b></p>
-     <div class="slidecontainer">
-     <input type="range" min="-100" max="100" value="10" class="slider" id="sliderParam2">
-     </div>
-     <p> More sliders to come ... </p>
-     <p> Click and drag to move the fractal around. </p>
-      <canvas id="glscreen"></canvas>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Andrew Richardson</title>
+	
 
 
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
 
-      <script id="2d-vertex-shader" type="x-shader/x-vertex">// <![CDATA[
-        attribute vec2 a_position;
-          void main() {
-            gl_Position = vec4(a_position, 0, 1);
-          }
-// ]]></script>
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
 
-      <script id="2d-fragment-shader" type="x-shader/x-fragment">// <![CDATA[
-        #ifdef GL_FRAGMENT_PRECISION_HIGH
-        precision highp float;
-        #else
-        precision mediump float;
-        #endif
+	</head>
+	<body>
+	<div id="fh5co-page">
+		<div id="fh5co-main">
+			<div class="fh5co-narrow-content">
+				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">About Me</h2>
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-3 col-sm-6 col-padding text-center animate-box">
+						<div class="blog-entry">
+							<a class="blog-img"><img src="images/me.JPG"> </a>
+						</div>
+					</div>
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<p></p>
+						<p>I'm Andrew Richardson, a 4th year informatics student at the University of Edinburgh. I'm studying on the 5 year integrated Masters of Informatics degree programme.</p>
+						<p> Throughout my degree I've enjoyed working on larger software-engineering style projects, while also really enjoying more mathematical topics - data science, computer simulations etc... 
+							Recently, areas like quantum computing and computational neuroscience have been really interesting to study.
+							While defenitely strongest with Python or Java, I've used C/C++ a fair amount and I love making fun things with Javascript. <!--Throughout university I've enjoyed learning a range of skills from using MIPS assembly, to implementing graph searching algorithms in Haskell.-->
+							 </p>
+						<p>I code for fun whenever I've got the time, and I've set up this website to briefly overview different projects I've worked on. 
+							This includes some university work I've found interesting.
+							This website is a more brief and organised overview of my skills, but I also host code on  <a href=https://github.com/abrichardson00>Github</a>.
+						</p>
+						<p>I set up this website by adapting a free CSS template from <a href=http://freehtml5.co/>http://freehtml5.co</a> - but when I've got more time I plan to remake one from scratch and improve my web developement skills. I'll also add more projects, like my honours project I'm currently working on. </p>
+					</div>
+					
+				</div>
+				
+				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Projects</h2>
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="theostore.html" class="blog-img"><img src="images/theostore2.png" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="theostore.html">Smart Storage Robot</a></h3>
+								
+								<p>A storage system which is remotely controlled through an Andriod app. Features include automatically cataloguing items / text using the Google Vision API. </p>
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="solar_system.html" class="blog-img"><img src="images/solar-system1.png" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="solar_system.html">Solar System Simulation (WIP)</a></h3>
+								
+								<p>Interactive web page which simulates planets / moons in the solar system, using a 4th order Runge-Kutta method.</p>
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="drone_route_planner.html" class="blog-img"><img src="images/drone_path_1.png" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="drone_route_planner.html">Drone Route Planner</a></h3>
+								
+								<p>A university project to plan drone routes visiting multiple locations while avoiding tall buildings. Uses Java and the Mapbox API.</p>
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="raymarching_fractals.html" class="blog-img"><img src="images/mandelbulb1.png" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="raymarching_fractals.html">3D Mandelbulb Rendering</a></h3>
+								
+								<p>Live web demo rendering fractals with a raymarching shader.</p>
+								
+							</div>
+						</div>
+					</div>
 
-        // parameters from sliders or mouse position etc
-        uniform vec3 fractal_pos;
-        uniform vec3 start;
-        uniform float param1;
-        uniform float param2;
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="procedural_planets.html" class="blog-img"><img src="images/planet3.jpg" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="procedural_planets.html"> Procedurally Generated Planets </a></h3>
+								<p> Game Developement with Unity - generating terrain and making it look pretty with shaders. </p>
+							</div>
+						</div>
+					</div>
+					<!--
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="#" class="blog-img"><img src="images/img-5.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
+							<div class="desc">
+								<h3><a href="#"> Goal-Oriented Action Planning</a></h3>
+								<p> Illustrating a use for a planning algorithm in C++. </p>
+							</div>
+						</div>
+					</div>
+					-->
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry" href="">
+							<a href="https://github.com/abrichardson00/Music-Generator" class="blog-img"><img src="images/music.png" class="img-responsive"></a>
+							<div class="desc">
+								<h3><a href="https://github.com/abrichardson00/Music-Generator">Music Generator</a></h3>
+								<p>Generating music by training a neural network on a dataset of Bach chorales.</p>
+							</div>
+						</div>
+					</div>
+					<!--
+					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+						<div class="blog-entry">
+							<a href="#" class="blog-img"><img src="images/1_8.png" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
+							<div class="desc">
+								<h3><a href="#"> Interesting Graphs </a></h3>
+								<p> A collection of interesting graphs / data analysis I've worked on throughout university. </p>
+							</div>
+						</div>
+					</div>
+					-->
+				</div>
+			</div>
+		
+		</div>
+	</div>
 
-        void main() {
-          float normalizedX = gl_FragCoord.x - 400.0;
-          float normalizedY = gl_FragCoord.y - 400.0;
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	
+	
+	<!-- MAIN JS -->
+	<script src="js/main.js"></script>
 
-          float window_distance = 200.0; // (distance from camera) // consider the rectangle we draw being the 'window' we look out
-
-          vec3 ray_dir = normalize(vec3(normalizedX,normalizedY,window_distance));
-          vec3 ray_dir_inc = 2.0*ray_dir;
-          vec4 colour = vec4(0.1,0.1,0.1,1.0);
-          float alpha = 1.0;
-
-          vec3 light_pos = vec3(5.0,5.0,0.9);
-
-          const int max_ray_distance = 220;
-          const int iterations = 6;
-
-          const float floor_level = -300.0;
-
-          bool getting_shadow = false;
-
-          vec3 ray_pos = start;
-          for (int i = 0; i < max_ray_distance; i += 1){
-            // we march the ray forward each loop
-            int a = 0;
-            vec3 w = (ray_pos - fractal_pos);
-            vec3 w_original = (ray_pos - fractal_pos);
-            float m = dot(w,w);
-            float dz = 1.0;
-
-            ray_pos += ray_dir*0.01; // march the ray forward
-
-            float min_dist = distance(w,fractal_pos);
-
-            // we use more of the fractal iterations for points closer to the viewer
-            float ray_dist_ratio = float(i) * (1.0 / float(max_ray_distance));
-            float detail_amount = ((1.0 - (ray_dist_ratio))*float(iterations)) + 1.0;
-            for (int iter = 0; iter < iterations; iter += 1) {
-              if (iter > int(detail_amount)) {
-                break;
-              }
-              // computing an iteration of the mandelbulb function
-
-              float m2 = m*m;
-              float m4 = m2*m2;
-		          //dz = 8.0*sqrt(m4*m2*m)*dz + 1.0;
-              dz = 8.0*sqrt(m4*m2*m)*dz + 1.0;
-
-              float x = w.x; float x2 = x*x; float x4 = x2*x2;
-              float y = w.y; float y2 = y*y; float y4 = y2*y2;
-              float z = w.z; float z2 = z*z; float z4 = z2*z2;
-
-              float k3 = x2 + z2;
-              float k2 = inversesqrt( k3*k3*k3*k3*k3*k3*k3 );
-              float k1 = x4 + y4 + z4 - 6.0*y2*z2 - 6.0*x2*y2 + 2.0*z2*x2;
-              float k4 = x2 - y2 + z2;
-
-
-
-              w.x =  w_original.x + 64.0*x*y*z*(x2-z2)*k4*(x4-6.0*x2*z2+z4)*k1*k2;
-              w.y =  w_original.y + -16.0*y2*k3*k4*k4 + k1*k1*param2 + param1;
-              w.z =  w_original.z + -8.0*y*k4*(x4*x4 - 28.0*x4*x2*z2 + 70.0*x4*z4 - 28.0*x2*z2*z4 + z4*z4)*k1*k2;
-
-
-              min_dist = min(min_dist, distance(w, fractal_pos));
-
-              m = dot(w,w);
-              if (m > 200.0) {
-                break;
-              }
-
-
-            }
-            // if it tends to 'infinity' (> 200) do this:
-            if (m <= 200.0) {
-              min_dist = (0.5*min_dist)/(distance(w_original, fractal_pos)) + 0.5;
-              //colour.x = 1.0;
-
-              colour = vec4(min_dist,min_dist,min_dist,1.0);
-              //colour.w = 0.025*log(m)*sqrt(m)/dz;// length(w_original)/length(fractal_pos);//
-              // we've hit the mandelbulb, so can stop marching ray forward
-
-              // now march ray towards light_pos, to see if this part of the fractal is in a shadow
-
-              if (getting_shadow == false){
-                ray_dir = normalize(light_pos - ray_pos) * 10.0;
-                ray_pos += ray_dir*0.001;
-                //i = max_ray_distance - 20;
-                getting_shadow = true;
-              } else {
-                // we hit fractal again - so we are in a shadow
-                colour = colour - vec4(0.4,0.4,0.4,0.0);
-                break;
-              }
-
-            }
-          }
-          gl_FragColor = colour;
-        }
-// ]]></script>
-
-      <script src="render.js"></script>
-
-   </body>
+	</body>
 </html>
+

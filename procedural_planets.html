@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Andrew Richardson</title>
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+	<div id="fh5co-page">
+		<div id="fh5co-main">
+			<div class="fh5co-narrow-content">
+				<div class="row row-bottom-padded-md">
+				<a href="index.html" class="lead" align="right"><i class="icon-arrow-left3"></i> Home </a>
+				</div>
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<img class="img-responsive" src="images/planet1.jpg">
+					</div>
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<h2 class="fh5co-heading"> Procedurally Generated Planets </h2>
+						
+						<b>Features: </b>
+						<ul>
+							<li>3D procedurally generated hills and water using a combination of noise and simulating some simple rain / hydraulic erosion. </li>
+							<li>Planet sphere is divided into different 'square' mesh chunks (i.e. the planet is really a cube, inflated into a sphere shape). Only appropriate visable chunks are rendered depending on camera position. Further away visable chunks are also rendered in less detail.</li>
+							<li>I then later played around with volumetric raymarching shaders. I used some existing cloud rendering shader and adapted it into a more general 'sky' shader. 
+								This added blue / red colours depending on the sun position relative to the camera. </li>
+						</ul>
+
+						<p>The rendering of different chunks at different details was a really fiddly but interesting problem. It was fun having this direct use for linear algebra (i.e. handling position vectors and calculating vector projections). 
+						</p>
+						<p>Code can be viewed <a href="https://github.com/abrichardson00/Procedural_Planet_Generator">here</a>, but it's just a bunch of the scripts for future reference, not the whole Unity project. I remember it reaching a rather broken state where remaking the project would probably be better than trying to fix everything. 
+						</p>
+						<p>I was notably less experienced with programming when I worked on this 2 years ago. The code quickly became a complete mess as more and more was added. However there were interesting problems to solve, and there were really cool results along the way.
+						</p>
+						
+					</div>
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<img class="img-responsive" src="images/planet2.jpg">
+					</div>
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<img class="img-responsive" src="images/planet3.jpg">
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	
+	
+	<!-- MAIN JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+

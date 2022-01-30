@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Solar System Simulation</title>
+		<style>
+			body { margin: 0; }
+
+
+			.slider {
+				-webkit-appearance: none;
+				width: 90%;
+				height: 15px;
+				background: #d3d3d3;
+				outline: none;
+				opacity: 0.7;
+				-webkit-transition: .2s;
+				transition: opacity .2s;
+			}
+
+			.slider:hover {
+				opacity: 1;
+			}
+
+
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 18px;
+				height: 18px;
+				background: #04AA6D;
+				cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+				width: 18px;
+				height: 18px;
+				background: #04AA6D;
+				cursor: pointer;
+			}
+
+			/* Fixed sidenav, full height */
+			.sidenav {
+				height: 100%;
+				width: 250px;
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				left: 0;
+				background-color: #111;
+				overflow-x: hidden;
+				padding-top: 20px;
+			}
+
+			/* Style the sidenav links and the dropdown button */
+			.sidenav a, .dropdown-btn {
+				padding: 6px 8px 20px 13px;
+				text-decoration: none;
+				font-family: "Roboto Mono", serif;
+  				font-weight: 400;
+				font-size: 15px;
+				color: #818181;
+				display: block;
+				border: none;
+				background: none;
+				width: 100%;
+				text-align: left;
+				cursor: pointer;
+				outline: none;
+			}
+
+			/* On mouse-over */
+			.sidenav a:hover, .dropdown-btn:hover {
+				color: #f1f1f1;
+			}
+
+			/* Main content */
+			.main {
+				margin-left: 200px; /* Same as the width of the sidenav */
+				font-size: 20px; /* Increased text to enable scrolling */
+				padding: 0px 10px;
+			}
+
+			/* Add an active class to the active dropdown button */
+			.active {
+				background-color: green;
+				color: white;
+			}
+
+			/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+			.dropdown-container {
+				display: none;
+				background-color: #262626;
+				padding-left: 8px;
+			}
+
+			/* Optional: Style the caret down icon */
+			.fa-caret-down {
+				float: right;
+				padding-right: 8px;
+			}
+
+			/* Some media queries for responsiveness */
+			@media screen and (max-height: 450px) {
+				.sidenav {padding-top: 15px;}
+				.sidenav a {font-size: 18px;}
+			}
+		</style>
+	</head>
+	<body>
+
+		
+
+		<div class="sidenav">
+			<a href="solar_system.html">About</a>
+			<a> Scale 
+			<div class="slidecontainer">
+				<input type="range" min="0" max="10" value="8", class="slider" id="scaleRange">
+			</div>
+			(real life <-> actually visable)
+			</a>
+			<a> Timestep
+				<div class="slidecontainer">
+					<input type="range" min="1" max="100000" value="10000", class="slider" id="timestepRange">
+				</div>
+			</a>
+			
+			<button class="dropdown-btn" name=newbodyoptions> New Body Options
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-container">
+				<a> Mass: <span id="newBodyMass"></span> (kg)
+					<div class="slidecontainer">
+						<input type="range" min="1" max="100000000" value="100000", class="slider" id="massRange">
+					</div>
+				</a>
+				<a> Radius: <span id="newBodyRadius"></span> (km)
+					<div class="slidecontainer">
+						<input type="range" min="1" max="10000" value="4000", class="slider" id="radiusRange">
+					</div>
+				</a>
+			</div>
+
+			<button class="dropdown-btn" name=selectbody> Select Body (currently broken)
+				<i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-container" name=selectbodyoptions>
+
+			</div>
+
+		  </div>
+
+		<script src="js/three.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/Body.js"></script>
+		<script src ="js/simulatorRK4.js"></script>
+		<script src ="js/threeSetup.js"></script>
+		<script src ="js/eventHandling.js"></script>
+		<script src ="js/initializeBodies.js"></script>
+		<script>
+
+			// UI slider / menu setup -------------------------------------------------------------------------
+
+			// global display / simulation options
+			var scaleSlider = document.getElementById("scaleRange");
+			var timestepSlider = document.getElementById("timestepRange");
+
+			// for creating new body
+			var newBodyMassSlider = document.getElementById("massRange");
+			var newBodyMassOutput = document.getElementById("newBodyMass");
+			var newBodyRadiusSlider = document.getElementById("radiusRange");
+			var newBodyRadiusOutput = document.getElementById("newBodyRadius");
+
+
+			// Select body
+			
+			var selectBodyDropdown = document.getElementsByName("selectbodyoptions")[0];
+			for (var i = 0; i < bodies.length; i++) {
+				//option = new Option("a")
+				option = document.createElement("a")
+				option.text = bodies[i].name
+				console.log(i)
+				//option.addEventListener("click", function() {
+				selectBodyDropdown.appendChild(option)
+				selectBodyDropdown.childNodes[i].onclick = function() {
+				//option.onclick = function() {
+					//this.classList.toggle("active");
+					
+					//controls.saveState();
+					cameraCenterBodyIndex = i;
+					console.log(i);
+					//console.log(camera.position)
+					controls.target = bodyCircles[i].position;
+					camera.position.x = bodies[i].position[0];
+					camera.position.y = bodies[i].position[1];
+					controls.enableRotate = false;
+					controls.enablePan = false;
+					//controls.update;
+					
+					console.log(controls.target);
+					
+					
+				};
+				
+			}
+
+			cameraCenterBodyIndex = -1;
+			console.log("first: " + cameraCenterBodyIndex);
+			var selectBodyButton = document.getElementsByName("selectbody")[0];
+			selectBodyButton.onclick = function() {
+				console.log("before if: " + cameraCenterBodyIndex);
+				if (cameraCenterBodyIndex != -1){
+					//cameraCenterBodyIndex = -1;
+					
+					
+					camera.position.x = 0.0;
+					camera.position.y = 0.0;
+					//camera.position.x = bodies[cameraCenterBodyIndex].position[0];
+					//set(0.0, 0.0, 1.5e8);
+					controls.target = new THREE.Vector3(0.0, 0.0, 0.0);//bodyCircles[0].position;//.set(0.0, 0.0, 0.0);
+					cameraCenterBodyIndex = -1;
+					//controls.enableRotate = true;
+					controls.enablePan = true;
+					controls.screenSpacePanning = true;
+					//controls.reset();
+					controls.update();
+					console.log(controls.target)
+					
+					//controls.update;
+				}
+			}
+
+
+			var dropdown = document.getElementsByClassName("dropdown-btn");
+			//var dropdown = document.getElementsByName("newbodyoptions");
+			for (var i = 0; i < dropdown.length; i++) {
+				dropdown[i].addEventListener("click", function() {
+					this.classList.toggle("active");
+					var dropdownContent = this.nextElementSibling;
+					if (dropdownContent.style.display === "block") {
+						dropdownContent.style.display = "none";
+					} else {
+						dropdownContent.style.display = "block";
+
+					}
+				});
+			}
+
+
+
+			/*
+			for (var i = 0; i < dropdown.length; i++) {
+				dropdown[i].addEventListener("click", function() {
+					this.classList.toggle("active");
+					var dropdownContent = this.nextElementSibling;
+					if (dropdownContent.style.display === "block") {
+						dropdownContent.style.display = "none";
+					} else {
+						dropdownContent.style.display = "block";
+					}
+
+				});
+			}
+			*/
+			//// what do the sliders actually do: ////
+			
+			// temporary fix - make sure scale is set to something before the slider is moved.
+			scale = 1 + scaleSlider.value * ((1 + Sun.radius - Math.sqrt(bodies[2].radius)) / (bodies[2].radius + 10000));
+
+			// change body scale so we can actually see planets
+			scaleSlider.oninput = function() {
+				for (var i = 0; i < bodies.length; i++) {
+					scale = 1 + this.value * ((1 + Sun.radius - Math.sqrt(bodies[i].radius)) / (bodies[i].radius + 10000));
+					bodyCircles[i].scale.x = scale;
+					bodyCircles[i].scale.y = scale;
+					bodyCircles[i].scale.z = scale;
+				}
+			}
+			timestepSlider.oninput = function() {
+				timestep = this.value;
+			}		
+			newBodyMassSlider.oninput = function() {
+				newBodyMassOutput.innerHTML = this.value*1e22;
+				createBodyMass = this.value*1e22;
+			}	
+			newBodyRadiusSlider.oninput = function() {
+				newBodyRadiusOutput.innerHTML = this.value;
+				createBodyRadius = this.value;
+			}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//// CREATING A NEW BODY FROM MOUSE DRAG DATA: --------------------------------------------------------------------
+
+			var bodyCreated = true; // assume just created a body (so have to mouseDown first before creating new one)
+			var numOfNewBodies = 0;
+			var createBodyMass = 1e27; // default initial values
+			var createBodyRadius = 4000;
+			
+			// create a new body from 2 X,Y coords of mouse positions on screen (pos and prevPos)
+			function createNewBody() {
+				// from mouse x,y, get actual body location from this 
+				var bodyPos = mouseCoordToZPlane(pos[0], pos[1]);
+				var bodyPrevPos = mouseCoordToZPlane(prevPos[0], prevPos[1]);
+
+				// we have 2 positions, get the velocity between 2 points in 1 timestep.
+				// ... actually 2 positions may be between a few timesteps - since we wait on onpointermove events along with the running animation
+				// a needed rough adjustment is to scale the velocity down a bit. (we just always consider timestep*10 or something)
+				var bodyVel = new Array(((bodyPos[0] - bodyPrevPos[0]) / (timestep*10)), ((bodyPos[1] - bodyPrevPos[1]) / (timestep*10)), 0.0);
+	
+				//// create the Body object ////
+				numOfNewBodies += 1;
+				const newBody = new Body("new body " + numOfNewBodies, createBodyRadius, 0xFF0000, createBodyMass, bodyPos, bodyVel);
+				bodies.push(newBody);
+
+				//// add the appropriate circle ////
+				const geometry = new THREE.CircleGeometry(newBody.radius, 20); // or something like that?
+				const material = new THREE.MeshBasicMaterial({color: newBody.colour});
+				const circle = new THREE.Mesh(geometry, material);
+				circle.position.x = newBody.position[0];
+				circle.position.y = newBody.position[1];
+				circle.position.z = newBody.position[2];
+				circle.scale.x = scale;
+				circle.scale.y = scale;
+				circle.scale.z = scale;
+				scene.add(circle);
+				bodyCircles.push(circle);
+				bodyCircles[bodyCircles.length-1].updateMatrix();
+
+				//bodyCreated used so that only 1 body created when mouseDown: true -> false 
+				bodyCreated = true; 
+				console.log("created body");
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+			function updateCameraPosition() {
+				if (cameraCenterBodyIndex != -1) {
+					console.log("fhsdoifjs");
+					//camera.position.x = bodies[cameraCenterBodyIndex].position[0];
+					//camera.position.y = bodies[cameraCenterBodyIndex].position[1];
+					camera.position.set(camera.position.x + bodies[cameraCenterBodyIndex].dposition[0], camera.position.y + bodies[cameraCenterBodyIndex].dposition[1], camera.position.z);
+					//camera.lookAt(0, 0, 0);
+					
+						
+				}
+			}
+
+
+
+
+
+
+
+			// actually update circles with the moving bodies --------------------------------
+			function updateSceneObjects() {
+				for (var i = 0; i < bodies.length; i++) {
+					bodyCircles[i].position.x = bodies[i].position[0];
+					bodyCircles[i].position.y = bodies[i].position[1];
+					bodyCircles[i].position.z = bodies[i].position[2];
+					bodyCircles[i].updateMatrix();
+				}
+			}
+
+
+			//// MAIN ANIMATION LOOP: ---------------------------------------------------------
+			const prevPos = new Array(0.0, 0.0);
+			const pos = new Array(0.0, 0.0);
+			const animate = function () {
+				// limit FPS to 30. Seems like a wise thing to do and have control of.
+				setTimeout( function() {
+					requestAnimationFrame( animate );
+				}, 1000 / 30 );
+
+				//console.log(camera.position);
+				
+				//// handle right clicked mouse position data - mouse is dragged before createNewBody() ////
+				if (mouseDown) {
+					// only update pos if an onpointermove event has happened and we have new mouse data
+					if (pos[0] != mouseScreenX && pos[1] != mouseScreenY) { 
+						bodyCreated = false;
+						prevPos[0] = pos[0];
+						prevPos[1] = pos[1];
+						pos[0] = mouseScreenX;
+						pos[1] = mouseScreenY;
+					}
+				}
+				// create new body?
+				if (!mouseDown && !bodyCreated) createNewBody();
+				
+
+				updateBodiesRK4(bodies); // run simulator update
+				updateSceneObjects(); // match circle positions to new data
+				updateCameraPosition();
+				renderer.render( scene, camera ); // <- render the new changes
+			};
+
+			animate();
+		</script>
+	</body>
+</html>

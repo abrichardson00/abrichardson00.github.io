@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Andrew Richardson</title>
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+	<div id="fh5co-page">
+		<div id="fh5co-main">
+			<div class="fh5co-narrow-content">
+				<div class="row row-bottom-padded-md">
+				<a href="index.html" class="lead" align="right"><i class="icon-arrow-left3"></i> Home </a>
+				</div>
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<img class="img-responsive" src="images/theostore2.png">
+					</div>
+					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+						<h2 class="fh5co-heading"> Smart Storage Robot </h2>
+						
+						<p>'TheoStore' is a smart storage system I developed with group of 7 others for a systems design course at university. The entire project was completed through remote working last year. 
+							Although the robot itself was just in a simulation environment, the physics of the actual trays in the shelf were simulated, and the robot was designed appropriately to move these. An Android app communicates with the simulation in real time - via http requests to a web server on the simulation's host computer.</p>
+						<b>Features: </b>
+						<ul>
+							<li>Objects are stored in these trays (shown in the picture), and the robot moves them to / from an access point.</li>
+							<li>One can remotely control the robot from an Android app - via the user interface or using voice control.</li>
+							<li>Trays are identified by barcode strips - multiple trays can be taken out at once and returned in any order.</li>
+							<li>Returning a tray documents a photo of the contents, which can be viewed in the app. The remaining capacity of the tray is also estimated from the photo. </li>
+							<li>Using the Google Vision API, object recognition and text recognition detects and stores any useful information on the tray contents. </li>
+							<li>One can then search for specific items / text in the app, and the appropriate tray is displayed.</li>
+							
+						</ul> 
+						<p>The theme of this semester long project was 'accessibility' - and we argued that this helps accessibility since you don't even need to be in the same room to find out / manage what's being stored. It could be helpful for people struggling to keep track of items.
+							<!--The boxes are also brought up to a height that requires no bending down to access - perhaps helpful for those with mobility difficulties. -->
+							<!--It's obviously hard to argue that older people would use a smartphone to control the storage of items, but we focused a lot on making the app simple and user-friendly.-->  </p>
+						<p>I played a role in most of the development of actual app functionality and communication with the robot's hosted web server. I took charge of smart functionalities such as the voice control and cataloging tray information using the Google Vision API. </p>
+							
+						<p>	I wasn't involved in creating the actual 'physical' design / working in the Webots robot simulation environment. I didn't design the specific user interface / style, but I was largely involved in specifiying the structure of the app, options availble and how they're accessed.     </p>
+						<p>Code can be viewed here: </p>
+						<ul>
+							<li><a href="https://github.com/abrichardson00/SDP-Group-8-Robot">https://github.com/abrichardson00/SDP-Group-8-Robot</a></li>
+							<li><a href="https://github.com/abrichardson00/SDP-Group-8-Android-App">https://github.com/abrichardson00/SDP-Group-8-Android-App</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	
+	
+	<!-- MAIN JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+
